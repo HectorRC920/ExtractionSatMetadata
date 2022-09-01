@@ -1,7 +1,7 @@
 const fs = require('fs');
 var XLSX = require('xlsx');
 const path = require('path')
-const filePath = path.resolve('ingresosJulio.txt')
+const filePath = path.resolve('gastosAgosto.txt')
 fs.readFile(filePath, 'utf8', (err, data) => {
   if (err) {
     console.error(err);
@@ -53,6 +53,9 @@ fs.readFile(filePath, 'utf8', (err, data) => {
             break;
         }
       }
+      if(headers[s] == 'Monto'){
+        splittedLine[s] = parseInt(splittedLine[s])
+      }
         object[`${headers[s]}`] = splittedLine[s]
     }
     arrayOfObjects.push(object)  
@@ -60,5 +63,5 @@ fs.readFile(filePath, 'utf8', (err, data) => {
   const worksheet = XLSX.utils.json_to_sheet(arrayOfObjects);
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, "Ingresos");
-  XLSX.writeFile(workbook, "ingresosJulio.xlsx");
+  XLSX.writeFile(workbook, "gastosAgosto.xlsx");
 });
